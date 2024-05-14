@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void run_cmd(char *cmd) {
+    
+}
+
 int main(int argc, char **argv) {
     system("clear");
     char line[256];
