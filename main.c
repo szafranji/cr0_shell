@@ -6,6 +6,10 @@ void run_cmd(char *cmd) {
     
 }
 
+void recognize_cmd(char *cmd)  {
+
+}
+
 int main(int argc, char **argv) {
     system("clear");
     char line[256];
