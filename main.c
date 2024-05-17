@@ -4,20 +4,24 @@
 #include <string.h>
 #include <dirent.h>
 
+void cmd_parser(const char *line) {
+
+}
+
 void ls() {
     DIR *current_directory;
     struct dirent *dir_entry;
 
     current_directory = opendir(".");
     
-    if(!current_directory) {
-        puts("Lmao folder is not exists!");
-    }
-    else {
+    if(current_directory != NULL) {
         //system("ls");
         while((dir_entry = readdir(current_directory)) != NULL) {
             printf("%s  |%d|\n", dir_entry->d_name, dir_entry->d_type);
         }
+    }
+    else {
+        puts("Lmao folder is not exists!");
     }
 
     closedir(current_directory);
