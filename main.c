@@ -2,12 +2,28 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <dirent.h>
 
-// at this moment cr0_sh will contain 3 commands: ls, cat, cp //
+void ls() {
+    DIR *current_directory;
+    struct dirent *dir_entry;
+
+    current_directory = opendir(".");
+    
+    if(!current_directory) {
+        puts("Lmao folder is not exists!");
+    }
+    else {
+        //system("ls");
+        while((dir_entry = readdir(current_directory)) != NULL) {
+            printf("%s \n", dir_entry->d_name);
+        }
+    }
+}
 
 void run_cmd(char *cmd)  {
     if(strcmp("ls", cmd) == 0) {
-        system("ls"); // it is not permanent solution
+        ls();
     }
 }
 
