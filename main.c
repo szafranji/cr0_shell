@@ -4,8 +4,12 @@
 #include <string.h>
 #include <dirent.h>
 
-void cmd_parser(const char *line) {
+int is_file_hidden(const char *str) {
+    return str[0]=='.';
+}
 
+void cmd_parser(const char *line) {
+    
 }
 
 void ls() {
@@ -15,10 +19,13 @@ void ls() {
     current_directory = opendir(".");
     
     if(current_directory != NULL) {
-        //system("ls");
         while((dir_entry = readdir(current_directory)) != NULL) {
-            printf("%s  |%d|\n", dir_entry->d_name, dir_entry->d_type);
+            if(is_file_hidden(dir_entry->d_name))
+                continue;
+            else
+                printf("  %s  ", dir_entry->d_name);
         }
+        printf("\n");
     }
     else {
         puts("Lmao folder is not exists!");
