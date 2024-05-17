@@ -16,7 +16,7 @@ void ls() {
     else {
         //system("ls");
         while((dir_entry = readdir(current_directory)) != NULL) {
-            printf("%s \n", dir_entry->d_name);
+            printf("%s  |%d|\n", dir_entry->d_name, dir_entry->d_type);
         }
     }
 
