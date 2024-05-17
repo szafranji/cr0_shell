@@ -19,6 +19,8 @@ void ls() {
             printf("%s \n", dir_entry->d_name);
         }
     }
+
+    closedir(current_directory);
 }
 
 void run_cmd(char *cmd)  {
