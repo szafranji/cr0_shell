@@ -4,6 +4,7 @@
 #include <string.h>
 #include <dirent.h>
 
+
 int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
@@ -43,10 +44,9 @@ void run_cmd(char *cmd)  {
 int main(int argc, char **argv) {
     system("clear");
     char line[256];
-    printf("cr0$ > ");
-    while(fgets(line, sizeof(line), stdin)) {
+    do {
         line[strcspn(line, "\n")] = 0;
         run_cmd(line);
         printf("cr0$ > ");
-    }
+    } while(fgets(line, sizeof(line), stdin));
 }
