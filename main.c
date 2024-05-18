@@ -4,6 +4,10 @@
 #include <string.h>
 #include <dirent.h>
 
+// different colors for different types of files
+#define CYAN "\x1b[36m"
+#define RESET "\x1b[0m"
+
 
 int is_file_hidden(const char *str) {
     return str[0]=='.';
@@ -24,7 +28,10 @@ void ls() {
             if(is_file_hidden(dir_entry->d_name))
                 continue;
             else
-                printf("  %s  ", dir_entry->d_name);
+                if(dir_entry->d_type == DT_DIR)
+                    printf( CYAN "%s  " RESET, dir_entry->d_name);
+                else
+                    printf("%s  ", dir_entry->d_name);
         }
         printf("\n");
     }
