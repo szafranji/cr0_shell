@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include "CMD.h"
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
@@ -19,13 +20,34 @@ int words_counter(const char *str) {
     return space_count;
 }
 
+void cmd_parser(char *line) {
+    struct CMD cmd1;
+}
+
+
+
 int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
 
-void cmd_parser(char *line) {
-    int words_num = words_counter(line);
-    printf("%d \n", words_num);
+void ll() {
+    DIR *current_directory;
+    struct dirent *dir_entry;
+
+    current_directory = opendir(".");
+    if(current_directory != NULL) {
+        int files_counter = 0;
+        while((dir_entry = readdir(current_directory)) != NULL) {
+            files_counter++;
+            printf("   %d) %s \n", files_counter, dir_entry->d_name);
+        }
+    }
+
+    else {
+        puts("Lmao folder is not exists!");
+    }
+
+    closedir(current_directory);
 }
 
 void ls() {
@@ -56,6 +78,9 @@ void run_cmd(char *cmd)  {
     if(strcmp("ls", cmd) == 0) {
         ls();
     }
+    else if(strcmp("ll", cmd) == 0) {
+        ll();
+    }
 }
 
 int main(int argc, char **argv) {
@@ -63,8 +88,8 @@ int main(int argc, char **argv) {
     char line[256];
     do {
         line[strcspn(line, "\n")] = 0;
-    //    run_cmd(line);
+        run_cmd(line);
         printf("cr0$ > ");
-        cmd_parser(line) ;
+//        cmd_parser(line) ;
     } while(fgets(line, sizeof(line), stdin));
 }
