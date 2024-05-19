@@ -7,6 +7,7 @@
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
+#define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
 int words_counter(const char *str) {
@@ -73,7 +74,12 @@ void l() {
 
     closedir(current_directory);
 }
-
+void wrong_cmd_error(const char *cmd) {
+    printf("cr0_shell:");
+    printf( RED " %s " RESET, cmd);
+    printf("is not found \n");
+    printf("cr0$ > ");
+}
 
 void run_cmd(const char *cmd)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
@@ -85,8 +91,7 @@ void run_cmd(const char *cmd)  {
         printf("cr0$ > ");
     }
     else {
-        printf("cr0_shell: %s is not found \n", cmd);
-        printf("cr0$ > ");
+        wrong_cmd_error(cmd);
     }
 }
 
