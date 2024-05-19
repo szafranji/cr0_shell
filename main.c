@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
-#include "CMD.h"
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
@@ -22,7 +21,6 @@ int words_counter(const char *str) {
 }
 
 void cmd_parser(const char *line) {
-    struct CMD cmd1;
     for(int i = 0; line[i] != ' '; i++) {
         printf("%c", line[i]);
     }
