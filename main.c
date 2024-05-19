@@ -110,7 +110,5 @@ int main(int argc, char **argv) {
     do {
         line[strcspn(line, "\n")] = 0;
         parse_input(line);
-    //    run_cmd(line);
-//        cmd_parser(line) ;
     } while(fgets(line, sizeof(line), stdin));
 }
