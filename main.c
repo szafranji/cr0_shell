@@ -21,11 +21,13 @@ int words_counter(const char *str) {
     return space_count;
 }
 
-void cmd_parser(char *line) {
+void cmd_parser(const char *line) {
     struct CMD cmd1;
+    for(int i = 0; line[i] != ' '; i++) {
+        printf("%c", line[i]);
+    }
+    printf("\n");
 }
-
-
 
 int is_file_hidden(const char *str) {
     return str[0]=='.';
@@ -127,6 +129,9 @@ void parse_input(const char *input_line) {
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) == 1) {
         run_cmd(input_line);
+    }
+    else if(strlen(input_line) > 0 && words_counter(input_line) > 1) {
+        cmd_parser(input_line);
     }
 }
 
