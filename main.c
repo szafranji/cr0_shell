@@ -75,7 +75,7 @@ void l() {
 }
 
 void run_cmd(char *cmd)  {
-    if(strcmp("l", cmd) == 0) {
+    if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
         l();
     }
     else if(strcmp("ll", cmd) == 0) {
