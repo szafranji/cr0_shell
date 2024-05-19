@@ -50,7 +50,7 @@ void ll() {
     closedir(current_directory);
 }
 
-void ls() {
+void l() {
     DIR *current_directory;
     struct dirent *dir_entry;
 
@@ -75,8 +75,8 @@ void ls() {
 }
 
 void run_cmd(char *cmd)  {
-    if(strcmp("ls", cmd) == 0) {
-        ls();
+    if(strcmp("l", cmd) == 0) {
+        l();
     }
     else if(strcmp("ll", cmd) == 0) {
         ll();
