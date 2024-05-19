@@ -37,15 +37,41 @@ void ll() {
 
     current_directory = opendir(".");
     if(current_directory != NULL) {
+        int first_dir = 0;
         int files_counter = 0;
+
+        while((dir_entry = readdir(current_directory)) != NULL) {
+            if(strcmp(".", dir_entry->d_name) == 0) {
+                printf("      %s \n", dir_entry->d_name);
+                break;
+            }
+            else
+                continue;
+        }
+        while((dir_entry = readdir(current_directory)) != NULL) {
+            if(strcmp("..", dir_entry->d_name) == 0) {
+                printf("      %s \n", dir_entry->d_name);
+                break;
+            }
+            else
+                continue;
+        }
+
+      rewinddir(current_directory);
+
         while((dir_entry = readdir(current_directory)) != NULL) {
             files_counter++;
-            printf("   %d) %s \n", files_counter, dir_entry->d_name);
+            if((strcmp(".", dir_entry->d_name) == 0) || (strcmp("..", dir_entry->d_name) == 0))
+                continue;
+            else
+                if(dir_entry->d_type == DT_DIR)
+                {
+                    printf("   %d) ", files_counter);
+                    printf( CYAN "%s \n" RESET, dir_entry->d_name);
+                }
+                else
+                    printf("   %d) %s \n", files_counter, dir_entry->d_name);
         }
-    }
-
-    else {
-        puts("Lmao folder is not exists!");
     }
 
     closedir(current_directory);
