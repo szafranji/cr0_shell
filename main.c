@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include "cmds/ls.h"
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
@@ -27,79 +28,6 @@ void cmd_parser(const char *line) {
     printf("\n");
 }
 
-int is_file_hidden(const char *str) {
-    return str[0]=='.';
-}
-
-void ll() {
-    DIR *current_directory;
-    struct dirent *dir_entry;
-
-    current_directory = opendir(".");
-    if(current_directory != NULL) {
-        int first_dir = 0;
-        int files_counter = 0;
-
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(strcmp(".", dir_entry->d_name) == 0) {
-                printf("      %s \n", dir_entry->d_name);
-                break;
-            }
-            else
-                continue;
-        }
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(strcmp("..", dir_entry->d_name) == 0) {
-                printf("      %s \n", dir_entry->d_name);
-                break;
-            }
-            else
-                continue;
-        }
-
-      rewinddir(current_directory);
-
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            files_counter++;
-            if((strcmp(".", dir_entry->d_name) == 0) || (strcmp("..", dir_entry->d_name) == 0))
-                continue;
-            else
-                if(dir_entry->d_type == DT_DIR)
-                {
-                    printf("   %d) ", files_counter);
-                    printf( CYAN "%s \n" RESET, dir_entry->d_name);
-                }
-                else
-                    printf("   %d) %s \n", files_counter, dir_entry->d_name);
-        }
-    }
-
-    closedir(current_directory);
-}
-
-void l() {
-    DIR *current_directory;
-    struct dirent *dir_entry;
-
-    current_directory = opendir(".");
-    if(current_directory != NULL) {
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(is_file_hidden(dir_entry->d_name))
-                continue;
-            else
-                if(dir_entry->d_type == DT_DIR)
-                    printf( CYAN "%s  " RESET, dir_entry->d_name);
-                else
-                    printf("%s  ", dir_entry->d_name);
-        }
-        printf("\n");
-    }
-    else {
-        puts("Lmao folder is not exists!");
-    }
-
-    closedir(current_directory);
-}
 void wrong_cmd_error(const char *cmd) {
     printf("cr0_shell:");
     printf( RED " %s " RESET, cmd);
@@ -107,7 +35,7 @@ void wrong_cmd_error(const char *cmd) {
     printf("cr0$ > ");
 }
 
-void run_cmd(const char *cmd)  {
+void run_cmd_without_args(const char *cmd)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
         l();
         printf("cr0$ > ");
@@ -126,7 +54,7 @@ void parse_input(const char *input_line) {
         printf("cr0$ > ");
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) == 1) {
-        run_cmd(input_line);
+        run_cmd_without_args(input_line);
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) > 1) {
         cmd_parser(input_line);
