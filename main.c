@@ -74,12 +74,28 @@ void l() {
     closedir(current_directory);
 }
 
-void run_cmd(char *cmd)  {
+
+void run_cmd(const char *cmd)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
         l();
+        printf("cr0$ > ");
     }
     else if(strcmp("ll", cmd) == 0) {
         ll();
+        printf("cr0$ > ");
+    }
+    else {
+        printf("cr0_shell: %s is not found \n", cmd);
+        printf("cr0$ > ");
+    }
+}
+
+void parse_input(const char *input_line) {
+    if(strlen(input_line) == 0) {
+        printf("cr0$ > ");
+    }
+    else if(strlen(input_line) > 0 && words_counter(input_line) == 1) {
+        run_cmd(input_line);
     }
 }
 
@@ -88,8 +104,8 @@ int main(int argc, char **argv) {
     char line[256];
     do {
         line[strcspn(line, "\n")] = 0;
-        run_cmd(line);
-        printf("cr0$ > ");
+        parse_input(line);
+    //    run_cmd(line);
 //        cmd_parser(line) ;
     } while(fgets(line, sizeof(line), stdin));
 }
