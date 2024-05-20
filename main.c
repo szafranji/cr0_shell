@@ -22,10 +22,11 @@ int words_counter(const char *str) {
 }
 
 void cmd_parser(const char *line) {
-    for(int i = 0; line[i] != ' '; i++) {
-        printf("%c", line[i]);
-    }
-    printf("\n");
+    char *cmd_name;
+    char *arg1;
+
+    cmd_name = strtok(line, " ");
+    arg1 = strtok(NULL, " ");
 }
 
 void wrong_cmd_error(const char *cmd) {

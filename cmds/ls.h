@@ -3,5 +3,6 @@
 
 void ll();
 void l();
-
+int is_file_hidden(const char *);
+int ls_check_the_args(const char *);
 #endif

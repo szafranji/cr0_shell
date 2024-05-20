@@ -79,3 +79,14 @@ void l() {
 
     closedir(current_directory);
 }
+
+int ls_checks_the_args(const char *line) {
+    char *args[] = {"-la", "-lt", "-lF", "-lc", "-ld"};
+
+    for(int i = 0; i < 5; i++) {
+        if(strcmp(args[i], line) == 0) {
+            return 1;
+        }
+    }
+    printf("cr0_shell: invalid argument for ls!\n");
+}
