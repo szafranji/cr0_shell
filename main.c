@@ -21,12 +21,20 @@ int words_counter(const char *str) {
     return space_count;
 }
 
+void check_args(const char *cmd, const char *arg1) {
+    if(strcmp("ls", cmd) == 0) {
+        ls_checks_the_args(arg1);
+    }
+}
+
 void cmd_parser(const char *line) {
     char *cmd_name;
     char *arg1;
 
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
+
+    check_args(cmd_name, arg1);
 }
 
 void wrong_cmd_error(const char *cmd) {
