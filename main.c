@@ -10,6 +10,13 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+void wrong_cmd_error(const char *cmd) {
+    printf("cr0_shell:");
+    printf( RED " %s " RESET, cmd);
+    printf("is not found \n");
+    printf("cr0$ > ");
+}
+
 int words_counter(const char *str) {
     int space_count = 0;
     for(int i = 0; str[i] != '\0'; i++) {
@@ -25,6 +32,9 @@ void check_args(const char *cmd, const char *arg1) {
     if(strcmp("ls", cmd) == 0) {
         ls_checks_the_args(arg1);
     }
+    else {
+        wrong_cmd_error(cmd);
+    }
 }
 
 void cmd_parser(const char *line) {
@@ -37,12 +47,6 @@ void cmd_parser(const char *line) {
     check_args(cmd_name, arg1);
 }
 
-void wrong_cmd_error(const char *cmd) {
-    printf("cr0_shell:");
-    printf( RED " %s " RESET, cmd);
-    printf("is not found \n");
-    printf("cr0$ > ");
-}
 
 void run_cmd_without_args(const char *cmd)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
