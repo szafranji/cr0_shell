@@ -89,4 +89,5 @@ int ls_checks_the_args(const char *line) {
         }
     }
     printf("cr0_shell: invalid argument for ls!\n");
+    printf("cr0$ > ");
 }
