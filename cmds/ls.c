@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 #define CYAN "\x1b[36m"
 #define RED "\x1b[31m"
@@ -14,6 +15,7 @@ int is_file_hidden(const char *str) {
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
+    struct stat *file_stat;
 
     current_directory = opendir(".");
     if(current_directory != NULL) {
@@ -46,10 +48,10 @@ void ll() {
                 if(dir_entry->d_type == DT_DIR)
                 {
                     printf("   %d) ", files_counter);
-                    printf( CYAN "%s \n" RESET, dir_entry->d_name);
+                    printf( CYAN "%s -- %d \n" RESET, dir_entry->d_name, file_stat->st_size);
                 }
                 else
-                    printf("   %d) %s \n", files_counter, dir_entry->d_name);
+                    printf("   %d) %s -- %lld \n", files_counter, dir_entry->d_name, (long long)file_stat->st_size);
         }
     }
 
