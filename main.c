@@ -5,8 +5,7 @@
 #include <dirent.h>
 #include "cmds/ls.h"
 
-// different colors for different types of files
-#define CYAN "\x1b[36m"
+// different colors for different types of files #define CYAN "\x1b[36m"
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
@@ -35,6 +34,13 @@ void check_args(const char *cmd, const char *arg1) {
     else {
         wrong_cmd_error(cmd);
     }
+}
+
+int check_arg_type(const char *arg) {
+    if(arg[0] == '-') {
+        return 1;
+    }
+    return 0; // if argument is not a built-in command argument
 }
 
 void cmd_parser(const char *line) {
