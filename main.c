@@ -50,7 +50,11 @@ void cmd_parser(const char *line) {
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
 
-    check_arg_existence(cmd_name, arg1);
+    if(!check_arg_type(arg1))
+        puts("not built-in arg");
+    else
+        check_arg_existence(cmd_name, arg1);
+    
 }
 
 
