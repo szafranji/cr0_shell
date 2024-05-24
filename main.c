@@ -27,7 +27,7 @@ int words_counter(const char *str) {
     return space_count;
 }
 
-void check_args(const char *cmd, const char *arg1) {
+void check_arg_existence(const char *cmd, const char *arg1) {
     if(strcmp("ls", cmd) == 0) {
         ls_checks_the_args(arg1);
     }
@@ -50,7 +50,7 @@ void cmd_parser(const char *line) {
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
 
-    check_args(cmd_name, arg1);
+    check_arg_existence(cmd_name, arg1);
 }
 
 
