@@ -78,21 +78,14 @@ void l(const char *arg) {
         }
 
     }
+    else if(strcmp("-lS", arg)) {
+        printf("Here will be output for ls -F");
+    }
     else {
-        puts("here will be output of directory");
+        printf("cr0_shell: Wrong argument for ls!");
+        printf("cr0$ > ");
     }
 
     closedir(current_directory);
 }
 
-int ls_checks_the_args(const char *line) {
-    char *args[] = {"-la", "-lt", "-lF", "-lc", "-ld"};
-
-    for(int i = 0; i < 5; i++) {
-        if(strcmp(args[i], line) == 0) {
-            return 1;
-        }
-    }
-    printf("cr0_shell: invalid argument for ls!\n");
-    printf("cr0$ > ");
-}

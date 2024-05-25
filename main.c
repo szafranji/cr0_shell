@@ -9,6 +9,7 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+
 void wrong_cmd_error(const char *cmd) {
     printf("cr0_shell:");
     printf( RED " %s " RESET, cmd);
@@ -23,20 +24,21 @@ int words_counter(const char *str) {
             space_count++;
     }
     space_count++;
-
     return space_count;
 }
 
-int check_arg_existence(const char *cmd, const char *arg1) {
-    if(strcmp("ls", cmd) == 0)
-        ls_checks_the_args(arg1);
-    else 
-        return 0;
-}
-
-void precheck_cmd(const char *cmd, const char *arg1) {
-    if(!check_arg_existence(cmd, arg1))
+void run_cmd(const char *cmd, const char *arg)  {
+    if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
+        l(arg);
+        printf("cr0$ > ");
+    }
+    else if(strcmp("ll", cmd) == 0) {
+        ll(arg);
+        printf("cr0$ > ");
+    }
+    else {
         wrong_cmd_error(cmd);
+    }
 }
 
 void line_parser(const char *line) {
@@ -46,21 +48,8 @@ void line_parser(const char *line) {
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
 
-    precheck_cmd(cmd_name, arg1);
-}
+    run_cmd(cmd_name, arg1);
 
-void run_cmd_without_args(const char *cmd)  {
-    if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
-        l(NULL);
-        printf("cr0$ > ");
-    }
-    else if(strcmp("ll", cmd) == 0) {
-        ll();
-        printf("cr0$ > ");
-    }
-    else {
-        wrong_cmd_error(cmd);
-    }
 }
 
 void parse_input(const char *input_line) {
@@ -68,12 +57,13 @@ void parse_input(const char *input_line) {
         printf("cr0$ > ");
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) == 1) {
-        run_cmd_without_args(input_line);
+        run_cmd(input_line, NULL);
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) > 1) {
         line_parser(input_line);
     }
 }
+
 
 int main(int argc, char **argv) {
     system("clear");
