@@ -36,22 +36,12 @@ void check_arg_existence(const char *cmd, const char *arg1) {
     }
 }
 
-int check_arg_type(const char *arg) {
-    if(arg[0] == '-') {
-        return 1;
-    }
-    return 0; // if argument is not a built-in command argument
-}
-
 void line_parser(const char *line) {
     char *cmd_name;
     char *arg1;
 
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
-
-    check_arg_existence(cmd_name, arg1);
-    
 }
 
 void run_cmd_without_args(const char *cmd)  {
