@@ -58,7 +58,7 @@ void ll() {
     closedir(current_directory);
 }
 
-void l(const char *arg) {
+void ls(const char *arg) {
     DIR *current_directory;
     struct dirent *dir_entry;
 
