@@ -28,17 +28,15 @@ int words_counter(const char *str) {
 }
 
 int check_arg_existence(const char *cmd, const char *arg1) {
-    if(strcmp("ls", cmd) == 0) {
+    if(strcmp("ls", cmd) == 0)
         ls_checks_the_args(arg1);
-    }
-    else {
-        wrong_cmd_error(cmd);
+    else 
         return 0;
-    }
 }
 
 void precheck_cmd(const char *cmd, const char *arg1) {
-    check_arg_existence(cmd, arg1);
+    if(!check_arg_existence(cmd, arg1))
+        wrong_cmd_error(cmd);
 }
 
 void line_parser(const char *line) {
