@@ -29,7 +29,7 @@ int words_counter(const char *str) {
 
 void run_cmd(const char *cmd, const char *arg)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
-        l(arg);
+        ls(arg);
         printf("cr0$ > ");
     }
     else if(strcmp("ll", cmd) == 0) {

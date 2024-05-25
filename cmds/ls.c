@@ -4,6 +4,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #define CYAN "\x1b[36m"
 #define RED "\x1b[31m"
@@ -12,6 +13,21 @@
 int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
+
+int check_if_arg_file(const char *arg) {
+    struct stat stat_path;
+    stat(arg, &stat_path);
+
+    return S_ISREG(stat_path.st_mode);
+}
+
+int check_if_arg_dir(const char *arg) {
+    struct stat stat_path;
+    stat(arg, &stat_path);
+
+    return S_ISDIR(stat_path.st_mode);
+}
+
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
@@ -76,16 +92,17 @@ void ls(const char *arg) {
             }
             printf("\n");
         }
-
     }
-    else if(strcmp("-lS", arg)) {
-        printf("Here will be output for ls -F");
+
+    else if (check_if_arg_dir(arg) == 1){
+        puts("This is a dir!");
+    }
+
+    else if (check_if_arg_file(arg) == 1){
+        puts("cr0_shell: can't ls a file!");
     }
     else {
-        printf("cr0_shell: Wrong argument for ls!");
-        printf("cr0$ > ");
+        puts("cr0_shell: wrong argument for ls!\n");
     }
-
-    closedir(current_directory);
 }
 
