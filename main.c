@@ -43,24 +43,20 @@ int check_arg_type(const char *arg) {
     return 0; // if argument is not a built-in command argument
 }
 
-void cmd_parser(const char *line) {
+void line_parser(const char *line) {
     char *cmd_name;
     char *arg1;
 
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
 
-    if(!check_arg_type(arg1))
-        puts("not built-in arg");
-    else
-        check_arg_existence(cmd_name, arg1);
+    check_arg_existence(cmd_name, arg1);
     
 }
 
-
 void run_cmd_without_args(const char *cmd)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
-        l();
+        l(NULL);
         printf("cr0$ > ");
     }
     else if(strcmp("ll", cmd) == 0) {
@@ -80,7 +76,7 @@ void parse_input(const char *input_line) {
         run_cmd_without_args(input_line);
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) > 1) {
-        cmd_parser(input_line);
+        line_parser(input_line);
     }
 }
 

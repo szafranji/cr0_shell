@@ -58,25 +58,28 @@ void ll() {
     closedir(current_directory);
 }
 
-void l() {
+void l(const char *arg) {
     DIR *current_directory;
     struct dirent *dir_entry;
 
-    current_directory = opendir(".");
-    if(current_directory != NULL) {
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(is_file_hidden(dir_entry->d_name))
-                continue;
-            else
-                if(dir_entry->d_type == DT_DIR)
-                    printf( CYAN "%s  " RESET, dir_entry->d_name);
+    if(arg == NULL) {
+        current_directory = opendir(".");
+        if(current_directory != NULL) {
+            while((dir_entry = readdir(current_directory)) != NULL) {
+                if(is_file_hidden(dir_entry->d_name))
+                    continue;
                 else
-                    printf("%s  ", dir_entry->d_name);
+                    if(dir_entry->d_type == DT_DIR)
+                        printf( CYAN "%s  " RESET, dir_entry->d_name);
+                    else
+                        printf("%s  ", dir_entry->d_name);
+            }
+            printf("\n");
         }
-        printf("\n");
+
     }
     else {
-        puts("Lmao folder is not exists!");
+        puts("here will be output of directory");
     }
 
     closedir(current_directory);
