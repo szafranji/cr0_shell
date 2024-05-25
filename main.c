@@ -27,13 +27,18 @@ int words_counter(const char *str) {
     return space_count;
 }
 
-void check_arg_existence(const char *cmd, const char *arg1) {
+int check_arg_existence(const char *cmd, const char *arg1) {
     if(strcmp("ls", cmd) == 0) {
         ls_checks_the_args(arg1);
     }
     else {
         wrong_cmd_error(cmd);
+        return 0;
     }
+}
+
+void precheck_cmd(const char *cmd, const char *arg1) {
+    check_arg_existence(cmd, arg1);
 }
 
 void line_parser(const char *line) {
@@ -42,6 +47,8 @@ void line_parser(const char *line) {
 
     cmd_name = strtok(line, " ");
     arg1 = strtok(NULL, " ");
+
+    precheck_cmd(cmd_name, arg1);
 }
 
 void run_cmd_without_args(const char *cmd)  {
