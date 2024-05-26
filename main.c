@@ -11,10 +11,13 @@
 
 void *get_current_dir() {
     char whole_current_dir[100];
+    char *root_dir = "/";
     getcwd(whole_current_dir, sizeof(whole_current_dir));
 
+    if(strcmp("/", whole_current_dir) == 0)
+        return root_dir;
+
     char *short_dir = strrchr(whole_current_dir, '/');
-    
     return short_dir+1;
 }
 
