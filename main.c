@@ -9,8 +9,18 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+void *get_current_dir() {
+    char whole_current_dir[100];
+    getcwd(whole_current_dir, sizeof(whole_current_dir));
+
+    char *short_dir = strrchr(whole_current_dir, '/');
+    
+    return short_dir+1;
+}
+
 void print_cr0() {
-    printf("cr0$ > ");
+    char *current_dir = get_current_dir();
+    printf("cr0$ %s > ", current_dir);
 }
 
 void wrong_cmd_error(const char *cmd) {
