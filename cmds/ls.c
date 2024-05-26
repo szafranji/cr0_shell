@@ -14,14 +14,13 @@ int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
 
-void ls_another_dir(const char *arg) {
-    DIR *another_directory;
+void ls_main(const char *arg) {
+    DIR *dir_to_list;
     struct dirent *dir_entry;
 
-    another_directory = opendir(arg);
-
-    if(another_directory != NULL) {
-        while((dir_entry = readdir(another_directory)) != NULL) {
+    dir_to_list = opendir(arg);
+    if(dir_to_list != NULL) {
+        while((dir_entry = readdir(dir_to_list)) != NULL) {
             if(is_file_hidden(dir_entry->d_name))
                 continue;
             else {
@@ -33,7 +32,8 @@ void ls_another_dir(const char *arg) {
         }
         printf("\n");
     }
-    closedir(another_directory);
+
+    closedir(dir_to_list);
 }
 
 int check_if_arg_file(const char *arg) {
@@ -100,32 +100,15 @@ void ls(const char *arg) {
     DIR *current_directory;
     struct dirent *dir_entry;
 
-    if(arg == NULL) {
-        current_directory = opendir(".");
-        if(current_directory != NULL) {
-            while((dir_entry = readdir(current_directory)) != NULL) {
-                if(is_file_hidden(dir_entry->d_name))
-                    continue;
-                else {
-                    if(dir_entry->d_type == DT_DIR)
-                        printf( CYAN "%s  " RESET, dir_entry->d_name);
-                    else
-                        printf("%s  ", dir_entry->d_name);
-                }
-            }
-            printf("\n");
-        }
-    }
+    if(arg == NULL)
+        ls_main(".");
 
-    else if (check_if_arg_dir(arg) == 1){
-        ls_another_dir(arg);
-    }
+    else if (check_if_arg_dir(arg) == 1)
+        ls_main(arg);
 
-    else if (check_if_arg_file(arg) == 1){
+    else if (check_if_arg_file(arg) == 1)
         puts("cr0_shell: can't ls a file!");
-    }
-    else {
-        puts("cr0_shell: file is not found!");
-    }
-}
 
+    else
+        puts("cr0_shell: file is not found!");
+}
