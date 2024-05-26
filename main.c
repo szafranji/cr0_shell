@@ -9,12 +9,15 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+void print_cr0() {
+    printf("cr0$ > ");
+}
 
 void wrong_cmd_error(const char *cmd) {
     printf("cr0_shell:");
     printf( RED " %s " RESET, cmd);
     printf("is not found \n");
-    printf("cr0$ > ");
+    print_cr0();
 }
 
 int words_counter(const char *str) {
@@ -30,11 +33,11 @@ int words_counter(const char *str) {
 void run_cmd(const char *cmd, const char *arg)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
         ls(arg);
-        printf("cr0$ > ");
+        print_cr0();
     }
     else if(strcmp("ll", cmd) == 0) {
         ll(arg);
-        printf("cr0$ > ");
+        print_cr0();
     }
     else {
         wrong_cmd_error(cmd);
@@ -54,7 +57,7 @@ void line_parser(const char *line) {
 
 void parse_input(const char *input_line) {
     if(strlen(input_line) == 0) {
-        printf("cr0$ > ");
+        print_cr0();
     }
     else if(strlen(input_line) > 0 && words_counter(input_line) == 1) {
         run_cmd(input_line, NULL);
