@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include "cmds/ls.h"
 #include "cmds/cd.h"
+#include "cmds/touch.h"
 
 // different colors for different types of files #define CYAN "\x1b[36m"
 #define CYAN "\x1b[36m"
@@ -56,6 +57,10 @@ void run_cmd(const char *cmd, const char *arg)  {
     }
     else if(strcmp("cd", cmd) == 0) {
         cd(arg);
+        print_cr0();
+    }
+    else if(strcmp("touch", cmd) == 0) {
+        touch(arg);
         print_cr0();
     }
     else {
