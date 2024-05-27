@@ -7,6 +7,7 @@
 #include "cmds/cd.h"
 
 // different colors for different types of files #define CYAN "\x1b[36m"
+#define CYAN "\x1b[36m"
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
@@ -24,7 +25,7 @@ void *get_current_dir() {
 
 void print_cr0() {
     char *current_dir = get_current_dir();
-    printf("cr0$ %s > ", current_dir);
+    printf("$ %s > ", current_dir);
 }
 
 void wrong_cmd_error(const char *cmd) {
