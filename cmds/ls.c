@@ -97,9 +97,6 @@ void ll() {
 }
 
 void ls(const char *arg) {
-    DIR *current_directory;
-    struct dirent *dir_entry;
-
     if(arg == NULL)
         ls_main(".");
 
