@@ -22,3 +22,7 @@ void cd(const char *arg) {
     else
         cd_main(arg);
 }
+
+void cd_to_oldpwd() {
+
+}
