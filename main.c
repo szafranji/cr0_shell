@@ -29,6 +29,12 @@ void print_cr0() {
     printf("$ %s > ", current_dir);
 }
 
+void pwd() {
+    char current_dir[100];
+    getcwd(current_dir, sizeof(current_dir));
+    printf("%s \n", current_dir);
+}
+
 void wrong_cmd_error(const char *cmd) {
     printf("cr0_shell:");
     printf( RED " %s " RESET, cmd);
@@ -61,6 +67,10 @@ void run_cmd(const char *cmd, const char *arg)  {
     }
     else if(strcmp("touch", cmd) == 0) {
         touch(arg);
+        print_cr0();
+    }
+    else if(strcmp("pwd", cmd) == 0) {
+        pwd();
         print_cr0();
     }
     else {
