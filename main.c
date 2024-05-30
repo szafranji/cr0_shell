@@ -7,12 +7,12 @@
 #include "cmds/cd.h"
 #include "cmds/touch.h"
 
-// different colors for different types of files #define CYAN "\x1b[36m"
+// different colors for different types of files
 #define CYAN "\x1b[36m"
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
-void *get_current_dir() {
+char *get_current_dir() {
     char whole_current_dir[100];
     char *root_dir = "/";
     getcwd(whole_current_dir, sizeof(whole_current_dir));
