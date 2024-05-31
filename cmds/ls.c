@@ -43,6 +43,13 @@ int check_if_arg_file(const char *arg) {
     return S_ISREG(stat_path.st_mode);
 }
 
+long check_file_size(const char *arg) {
+    struct stat stat_path;
+    stat(arg, &stat_path);
+
+    return stat_path.st_size;
+}
+
 int check_if_arg_dir(const char *arg) {
     struct stat stat_path;
     stat(arg, &stat_path);
@@ -57,7 +64,6 @@ void ll() {
 
     current_directory = opendir(".");
     if(current_directory != NULL) {
-        int files_counter = 0;
 
         while((dir_entry = readdir(current_directory)) != NULL) {
             if(strcmp(".", dir_entry->d_name) == 0) {
@@ -79,17 +85,21 @@ void ll() {
       rewinddir(current_directory);
 
         while((dir_entry = readdir(current_directory)) != NULL) {
-            files_counter++;
+            long f_size = 0;
             if((strcmp(".", dir_entry->d_name) == 0) || (strcmp("..", dir_entry->d_name) == 0))
                 continue;
-            else
+            else {
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    printf("   %d) ", files_counter);
-                    printf( CYAN "%s -- %d \n" RESET, dir_entry->d_name, file_stat->st_size);
+                    f_size = check_file_size(dir_entry->d_name);
+                    printf( CYAN "    %s \t -- \t%ld B \n" RESET, dir_entry->d_name, f_size);
                 }
-                else
-                    printf("   %d) %s -- %lld \n", files_counter, dir_entry->d_name, (long long)file_stat->st_size);
+                else {
+                    f_size = check_file_size(dir_entry->d_name);
+                    printf("    %s \t -- \t%ld B \n", dir_entry->d_name, f_size);
+                }
+            }
+            f_size = 0;
         }
     }
 
