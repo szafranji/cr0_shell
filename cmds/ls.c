@@ -43,6 +43,8 @@ int check_if_arg_file(const char *arg) {
     return S_ISREG(stat_path.st_mode);
 }
 
+
+
 long check_file_size(const char *arg) {
     struct stat stat_path;
     stat(arg, &stat_path);
@@ -57,10 +59,29 @@ int check_if_arg_dir(const char *arg) {
     return S_ISDIR(stat_path.st_mode);
 }
 
+int get_file_size(const char *arg, char *tag) {
+    long f_size = check_file_size(arg);
+
+    if(f_size > 1000000) {
+        f_size = f_size / (1024*1024);
+        strcpy(tag, "MB");
+    }
+    else if((f_size > 1000 && f_size < 1000000)) {
+        f_size = f_size / 1024;
+        strcpy(tag, "KB");
+    }
+    else
+        strcpy(tag, "B");
+
+    return f_size;
+}
+
+
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
     struct stat *file_stat;
+    char file_size_tag[120];
 
     current_directory = opendir(".");
     if(current_directory != NULL) {
@@ -85,18 +106,19 @@ void ll() {
       rewinddir(current_directory);
 
         while((dir_entry = readdir(current_directory)) != NULL) {
-            long f_size = 0;
+            int f_size = 0;
+
             if((strcmp(".", dir_entry->d_name) == 0) || (strcmp("..", dir_entry->d_name) == 0))
                 continue;
+
             else {
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    f_size = check_file_size(dir_entry->d_name);
-                    printf( CYAN "    %s \t -- \t%ld B \n" RESET, dir_entry->d_name, f_size);
+                    printf( CYAN "    %s \t -- \t4096 B \n" RESET, dir_entry->d_name);
                 }
                 else {
-                    f_size = check_file_size(dir_entry->d_name);
-                    printf("    %s \t -- \t%ld B \n", dir_entry->d_name, f_size);
+                    f_size = get_file_size(dir_entry->d_name, file_size_tag);
+                    printf("    %s \t -- \t%ld %s\n", dir_entry->d_name, f_size, file_size_tag);
                 }
             }
             f_size = 0;
