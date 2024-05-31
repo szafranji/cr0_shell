@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <pwd.h>
+
+char prev_dir[120];
 
 void cd_main(const char *arg) {
     int ret;
@@ -15,14 +18,18 @@ void cd_HOME() {
     cd_main(home_addr);
 }
 
-
-void cd(const char *arg) {
-    if(arg == NULL)
+void cd(char *arg) {
+    if(arg == NULL) {
+        getcwd(prev_dir, sizeof(prev_dir));
         cd_HOME();
-    else
+    }
+    else if(strcmp("-", arg) == 0) {
+        strcpy(arg, prev_dir);
+        getcwd(prev_dir, sizeof(prev_dir));
         cd_main(arg);
-}
-
-void cd_to_oldpwd() {
-
+    }
+    else {
+        getcwd(prev_dir, sizeof(prev_dir));
+        cd_main(arg);
+    }
 }
