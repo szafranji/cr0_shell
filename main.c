@@ -52,7 +52,7 @@ int words_counter(const char *str) {
     return space_count;
 }
 
-void run_cmd(const char *cmd, const char *arg)  {
+void run_cmd(const char *cmd, char *arg)  {
     if(strcmp("l", cmd) == 0 || strcmp("ls", cmd) == 0) {
         ls(arg);
         print_cr0();
@@ -78,7 +78,7 @@ void run_cmd(const char *cmd, const char *arg)  {
     }
 }
 
-void line_parser(const char *line) {
+void line_parser(char *line) {
     char *cmd_name;
     char *arg1;
 
@@ -86,10 +86,9 @@ void line_parser(const char *line) {
     arg1 = strtok(NULL, " ");
 
     run_cmd(cmd_name, arg1);
-
 }
 
-void parse_input(const char *input_line) {
+void parse_input(char *input_line) {
     if(strlen(input_line) == 0) {
         print_cr0();
     }
