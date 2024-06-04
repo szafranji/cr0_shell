@@ -24,7 +24,7 @@ void cd(char *arg) {
         cd_HOME();
     }
     else if(strcmp("-", arg) == 0) {
-        strcpy(arg, prev_dir);
+        strncpy(arg, prev_dir, sizeof(prev_dir));
         getcwd(prev_dir, sizeof(prev_dir));
         cd_main(arg);
     }

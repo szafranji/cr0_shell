@@ -64,14 +64,14 @@ int get_file_size(const char *arg, char *tag) {
 
     if(f_size > 1000000) {
         f_size = f_size / (1024*1024);
-        strcpy(tag, "MB");
+        strncpy(tag, "MB", 3);
     }
     else if((f_size > 1000 && f_size < 1000000)) {
         f_size = f_size / 1024;
-        strcpy(tag, "KB");
+        strncpy(tag, "KB", 3);
     }
     else
-        strcpy(tag, "B");
+        strncpy(tag, "B", 2);
 
     return f_size;
 }
