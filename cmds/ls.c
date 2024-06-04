@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -80,6 +81,7 @@ int get_file_size(const char *arg, char *tag) {
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
+    struct stat sb;
     char file_size_tag[120];
 
     current_directory = opendir(".");
@@ -87,7 +89,7 @@ void ll() {
 
         while((dir_entry = readdir(current_directory)) != NULL) {
             if(strcmp(".", dir_entry->d_name) == 0) {
-                printf("      %s \n", dir_entry->d_name);
+                printf("\t%s \n", dir_entry->d_name);
                 break;
             }
             else
@@ -95,7 +97,7 @@ void ll() {
         }
         while((dir_entry = readdir(current_directory)) != NULL) {
             if(strcmp("..", dir_entry->d_name) == 0) {
-                printf("      %s \n", dir_entry->d_name);
+                printf("%s \n", dir_entry->d_name);
                 break;
             }
             else
@@ -113,11 +115,11 @@ void ll() {
             else {
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    printf( CYAN "    %s \t -- \t4096 B \n" RESET, dir_entry->d_name);
+                    printf( CYAN "%s | 4096 B | %s \n" RESET, ctime(&sb.st_mtime), dir_entry->d_name);
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("    %s \t -- \t%ld %s\n", dir_entry->d_name, f_size, file_size_tag);
+                    printf("%s | %ld %s | %s \n", ctime(&sb.st_mtime), f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
