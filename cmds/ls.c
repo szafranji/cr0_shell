@@ -37,26 +37,26 @@ void ls_main(const char *arg) {
 }
 
 int check_if_arg_file(const char *arg) {
-    struct stat stat_path;
-    stat(arg, &stat_path);
+    struct stat sb;
+    stat(arg, &sb);
 
-    return S_ISREG(stat_path.st_mode);
+    return S_ISREG(sb.st_mode);
 }
 
 
 
 long check_file_size(const char *arg) {
-    struct stat stat_path;
-    stat(arg, &stat_path);
+    struct stat sb;
+    stat(arg, &sb);
 
-    return stat_path.st_size;
+    return sb.st_size;
 }
 
 int check_if_arg_dir(const char *arg) {
-    struct stat stat_path;
-    stat(arg, &stat_path);
+    struct stat sb;
+    stat(arg, &sb);
 
-    return S_ISDIR(stat_path.st_mode);
+    return S_ISDIR(sb.st_mode);
 }
 
 int get_file_size(const char *arg, char *tag) {
@@ -80,7 +80,6 @@ int get_file_size(const char *arg, char *tag) {
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
-    struct stat *file_stat;
     char file_size_tag[120];
 
     current_directory = opendir(".");
