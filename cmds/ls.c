@@ -15,6 +15,15 @@ int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
 
+char *get_file_time(const char *str) {
+ // TO DO
+}
+
+char *get_file_perm(const char *str) {
+ // TO DO
+}
+
+
 void ls_main(const char *arg) {
     DIR *dir_to_list;
     struct dirent *dir_entry;
@@ -115,11 +124,11 @@ void ll() {
             else {
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    printf( CYAN "%s | 4096 B | %s \n" RESET, ctime(&sb.st_mtime), dir_entry->d_name);
+                    printf( CYAN "4096B | %s \n" RESET, dir_entry->d_name);
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("%s | %ld %s | %s \n", ctime(&sb.st_mtime), f_size, file_size_tag, dir_entry->d_name);
+                    printf("%ld%s | %s \n", f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
