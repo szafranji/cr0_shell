@@ -128,7 +128,7 @@ void ll() {
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("%ld%s | %s \n", f_size, file_size_tag, dir_entry->d_name);
+                    printf("%d%s | %s \n", f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
