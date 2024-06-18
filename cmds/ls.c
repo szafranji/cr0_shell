@@ -90,7 +90,6 @@ int get_file_size(const char *arg, char *tag) {
 void ll() {
     DIR *current_directory;
     struct dirent *dir_entry;
-    struct stat sb;
     char file_size_tag[120];
 
     current_directory = opendir(".");
