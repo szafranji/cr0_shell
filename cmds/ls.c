@@ -15,6 +15,10 @@ int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
 
+int check_flag(const char *arg) {
+    return arg[0]=='-';
+}
+
 char *get_file_time(const char *str) {
  // TO DO
 }

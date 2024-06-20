@@ -4,6 +4,7 @@
 void ll();
 void ls(const char *);
 void ls_main(const char *);
+int check_flag(const char *);
 int is_file_hidden(const char *);
 int ls_checks_the_args(const char *);
 #endif
