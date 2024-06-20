@@ -144,6 +144,8 @@ void ll() {
 void ls(const char *arg) {
     if(arg == NULL)
         ls_main(".");
+    else if(check_flag(arg) == 1)
+        puts("cr0_shell: ls doesn't have flags! Use ll instead!");
 
     else if (check_if_arg_dir(arg) == 1)
         ls_main(arg);
@@ -152,5 +154,5 @@ void ls(const char *arg) {
         puts("cr0_shell: can't ls a file!");
 
     else
-        puts("cr0_shell: file is not found!");
+        puts("cr0_shell: dir is not found!");
 }
