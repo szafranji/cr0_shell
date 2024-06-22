@@ -6,6 +6,7 @@
 #include "cmds/ls.h"
 #include "cmds/cd.h"
 #include "cmds/touch.h"
+#include "cmds/echo.h"
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
@@ -71,6 +72,10 @@ void run_cmd(const char *cmd, char *arg)  {
     }
     else if(strcmp("pwd", cmd) == 0) {
         pwd();
+        print_cr0();
+    }
+    else if(strcmp("echo", cmd) == 0) {
+        echo(arg);
         print_cr0();
     }
     else {
