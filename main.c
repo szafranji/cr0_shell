@@ -3,10 +3,10 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
-#include "cmds/ls.h"
-#include "cmds/cd.h"
-#include "cmds/touch.h"
-#include "cmds/echo.h"
+#include "cmds/built-in/ls.h"
+#include "cmds/built-in/cd.h"
+#include "cmds/built-in/touch.h"
+#include "cmds/built-in/echo.h"
 
 // different colors for different types of files
 #define CYAN "\x1b[36m"
