@@ -10,8 +10,8 @@ int check_gt_symbol(const char *arg) {
     return 1;
 }
 
-void echo_main(const char *line) {
-    printf("%s \n", line);
+void echo_main(const char *arg) {
+    printf("%s \n", arg);
 }
 
 int check_if_arg_gile(const char *arg) {
@@ -21,9 +21,15 @@ int check_if_arg_gile(const char *arg) {
     return S_ISREG(sb.st_mode);
 }
 
-void echo_parse(const char *line) {
-    if(check_gt_symbol(line) != 0 && check_if_arg_gile(line) != 1)
-        echo_main(line);
+void echo_parse(const char *arg) {
+    if(check_gt_symbol(arg) != 0 && check_if_arg_gile(arg) != 1) // if arg is random text without > symbol or if arg is not a file or dir
+        echo_main(arg);
+    else if(check_gt_symbol(arg) == 0 && check_if_arg_gile(arg) != 1) {  // if line contains gt symbol
+            // TO DO
+    }
+    else if(check_gt_symbol(arg) != 0 && check_if_arg_gile(arg) == 1) { // if arg is a file
+            // cat(arg);
+    }
 }
 
 void echo(const char *line) {
