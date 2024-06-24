@@ -11,13 +11,11 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
-char *chmod_str;
-
-char *check_file_chmod(const char *arg) {
+void check_file_chmod(const char *arg, char *chmod_buffer) {
     struct stat sb;
     stat(arg, &sb);
 
-    char *chmod;
+    char *chmod = malloc(9*sizeof(char));
 
     if(sb.st_mode & S_IRUSR) strcat(chmod, "r");
     else strcat(chmod, "-");
@@ -46,7 +44,8 @@ char *check_file_chmod(const char *arg) {
     if(sb.st_mode & S_IXOTH) strcat(chmod, "x");
     else strcat(chmod, "-");
 
-    return chmod;
+    strncpy(chmod_buffer, chmod, 8);
+    chmod_buffer[8] = '\0';
 }
 
 
@@ -129,25 +128,22 @@ void ll() {
     current_directory = opendir(".");
     if(current_directory != NULL) {
 
-        char *chmod_str;
-
-        printf("\t chmod \t size \t| name\n");
-        printf("\t ----- \t ---- \t  ----\n");
-
         while((dir_entry = readdir(current_directory)) != NULL) {
             int f_size = 0;
+            char chmod_str[9];
 
             if((strcmp(".", dir_entry->d_name) == 0) || (strcmp("..", dir_entry->d_name) == 0))
                 continue;
 
             else {
+                check_file_chmod(dir_entry->d_name, chmod_str);
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    printf( CYAN "\t \t 4096B \t| %s \n" RESET, dir_entry->d_name);
+                    printf( CYAN "%s 4096B \t%s\n" RESET, chmod_str, dir_entry->d_name);
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("\t%s \t %d%s \t| %s \n", check_file_chmod(dir_entry->d_name), f_size, file_size_tag, dir_entry->d_name);
+                    printf("%s %d%s \t%s\n", chmod_str, f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
