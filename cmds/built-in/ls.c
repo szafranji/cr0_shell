@@ -99,24 +99,26 @@ void ll() {
     current_directory = opendir(".");
     if(current_directory != NULL) {
 
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(strcmp(".", dir_entry->d_name) == 0) {
-                printf("\t%s \n", dir_entry->d_name);
-                break;
-            }
-            else
-                continue;
-        }
-        while((dir_entry = readdir(current_directory)) != NULL) {
-            if(strcmp("..", dir_entry->d_name) == 0) {
-                printf("%s \n", dir_entry->d_name);
-                break;
-            }
-            else
-                continue;
-        }
+     //   while((dir_entry = readdir(current_directory)) != NULL) {
+     //       if(strcmp(".", dir_entry->d_name) == 0) {
+     //           printf("\t%s \n", dir_entry->d_name);
+     //           break;
+     //       }
+     //       else
+     //           continue;
+     //   }
+     //   while((dir_entry = readdir(current_directory)) != NULL) {
+     //       if(strcmp("..", dir_entry->d_name) == 0) {
+     //           printf("%s \n", dir_entry->d_name);
+     //           break;
+     //       }
+     //       else
+     //           continue;
+     //   }
 
-      rewinddir(current_directory);
+     // rewinddir(current_directory);
+        printf("\t type \t size \t| name\n");
+        printf("\t ---- \t ---- \t  ----\n");
 
         while((dir_entry = readdir(current_directory)) != NULL) {
             int f_size = 0;
@@ -127,11 +129,11 @@ void ll() {
             else {
                 if(dir_entry->d_type == DT_DIR)
                 {
-                    printf( CYAN "4096B | %s \n" RESET, dir_entry->d_name);
+                    printf( CYAN "\t \t 4096B \t| %s \n" RESET, dir_entry->d_name);
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("%d%s | %s \n", f_size, file_size_tag, dir_entry->d_name);
+                    printf("\t \t %d%s \t| %s \n", f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
