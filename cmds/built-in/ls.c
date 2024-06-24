@@ -117,8 +117,8 @@ void ll() {
      //   }
 
      // rewinddir(current_directory);
-        printf("\t type \t size \t| name\n");
-        printf("\t ---- \t ---- \t  ----\n");
+        printf("\t chmod \t size \t| name\n");
+        printf("\t ----- \t ---- \t  ----\n");
 
         while((dir_entry = readdir(current_directory)) != NULL) {
             int f_size = 0;
