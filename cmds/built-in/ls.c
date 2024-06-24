@@ -11,6 +11,45 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+char *chmod_str;
+
+char *check_file_chmod(const char *arg) {
+    struct stat sb;
+    stat(arg, &sb);
+
+    char *chmod;
+
+    if(sb.st_mode & S_IRUSR) strcat(chmod, "r");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IWUSR) strcat(chmod, "w");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IXUSR) strcat(chmod, "x");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IRGRP) strcat(chmod, "r");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IWGRP) strcat(chmod, "w");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IXGRP) strcat(chmod, "x");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IROTH) strcat(chmod, "r");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IWOTH) strcat(chmod, "w");
+    else strcat(chmod, "-");
+
+    if(sb.st_mode & S_IXOTH) strcat(chmod, "x");
+    else strcat(chmod, "-");
+
+    return chmod;
+}
+
+
 int is_file_hidden(const char *str) {
     return str[0]=='.';
 }
@@ -18,15 +57,6 @@ int is_file_hidden(const char *str) {
 int check_flag(const char *arg) {
     return arg[0]=='-';
 }
-
-char *get_file_time(const char *str) {
- // TO DO
-}
-
-char *get_file_perm(const char *str) {
- // TO DO
-}
-
 
 void ls_main(const char *arg) {
     DIR *dir_to_list;
@@ -99,24 +129,8 @@ void ll() {
     current_directory = opendir(".");
     if(current_directory != NULL) {
 
-     //   while((dir_entry = readdir(current_directory)) != NULL) {
-     //       if(strcmp(".", dir_entry->d_name) == 0) {
-     //           printf("\t%s \n", dir_entry->d_name);
-     //           break;
-     //       }
-     //       else
-     //           continue;
-     //   }
-     //   while((dir_entry = readdir(current_directory)) != NULL) {
-     //       if(strcmp("..", dir_entry->d_name) == 0) {
-     //           printf("%s \n", dir_entry->d_name);
-     //           break;
-     //       }
-     //       else
-     //           continue;
-     //   }
+        char *chmod_str;
 
-     // rewinddir(current_directory);
         printf("\t chmod \t size \t| name\n");
         printf("\t ----- \t ---- \t  ----\n");
 
@@ -133,7 +147,7 @@ void ll() {
                 }
                 else {
                     f_size = get_file_size(dir_entry->d_name, file_size_tag);
-                    printf("\t \t %d%s \t| %s \n", f_size, file_size_tag, dir_entry->d_name);
+                    printf("\t%s \t %d%s \t| %s \n", check_file_chmod(dir_entry->d_name), f_size, file_size_tag, dir_entry->d_name);
                 }
             }
             f_size = 0;
