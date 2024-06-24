@@ -27,7 +27,7 @@ char *get_current_dir() {
 
 void print_cr0() {
     char *current_dir = get_current_dir();
-    printf("-> %s > ", current_dir);
+    printf("%s 𪅐 ", current_dir);
 }
 
 void pwd() {

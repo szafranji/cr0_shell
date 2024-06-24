@@ -1,4 +1,4 @@
-OBJ = ls.o cd.o touch.o echo.o
+OBJ = ls.o cd.o touch.o echo.o main.o
 BUILTIN = cmds/built-in/
 CC = gcc
 CC_FLAGS = -Wall
@@ -6,8 +6,10 @@ CC_FLAGS = -Wall
 all: cr0_shell
 
 cr0_shell: $(OBJ)
-	$(CC) main.c $(OBJ) -o cr0_shell
+	$(CC) $(OBJ) -o cr0_shell
 
+main.o: main.c
+	$(CC) -c main.c
 ls.o: $(BUILTIN)ls.c $(BUILTIN)ls.h
 	$(CC) -c $(BUILTIN)ls.c
 cd.o: $(BUILTIN)cd.o $(BUILTIN)cd.h
