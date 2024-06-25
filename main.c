@@ -13,6 +13,14 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+void run_external_cmd(const char *cmd, const char *arg1) {
+    int ret;
+
+    ret = execl(cmd, arg1, NULL);
+    if(ret == -1)
+        perror("execl");
+}
+
 int search_external_cmd(const char *arg) {
     DIR *bin_dir;
     struct dirent *entry;
@@ -91,7 +99,7 @@ void run_cmd(const char *cmd, char *arg)  {
         print_cr0();
     }
     else if(search_external_cmd(cmd)) {
-        printf("FOUND!");
+        run_external_cmd(cmd, arg);
     }
     else {
         wrong_cmd_error(cmd);
