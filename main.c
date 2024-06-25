@@ -13,6 +13,18 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+int search_external_cmd(const char *arg) {
+    DIR *bin_dir;
+    struct dirent *entry;
+
+    if((bin_dir = opendir("/bin/")) != NULL) {
+        while((entry = readdir(bin_dir)) != NULL) {
+            if(strcmp(entry->d_name, arg) == 0)
+                return 1;
+        }
+    }
+}
+
 char *get_current_dir() {
     char whole_current_dir[100];
     char *root_dir = "/";
@@ -77,6 +89,9 @@ void run_cmd(const char *cmd, char *arg)  {
     else if(strcmp("echo", cmd) == 0) {
         echo(arg);
         print_cr0();
+    }
+    else if(search_external_cmd(cmd)) {
+        printf("FOUND!");
     }
     else {
         wrong_cmd_error(cmd);
