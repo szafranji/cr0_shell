@@ -13,10 +13,18 @@
 #define RED "\x1b[31m"
 #define RESET "\x1b[0m"
 
+void get_cmd_path(const char *cmd, char *whole_path_to_run) {
+    char bin_path[50] = "/bin/";
+    strcat(bin_path, cmd);
+    strncpy(whole_path_to_run, bin_path, strlen(bin_path));
+}
+
 void run_external_cmd(const char *cmd, const char *arg1) {
     int ret;
+    char whole_path_to_run[50] = {0};
+    get_cmd_path(cmd, whole_path_to_run);
+    printf("%s \n", whole_path_to_run);
 
-    ret = execl(cmd, arg1, NULL);
     if(ret == -1)
         perror("execl");
 }
@@ -99,7 +107,7 @@ void run_cmd(const char *cmd, char *arg)  {
         print_cr0();
     }
     else if(search_external_cmd(cmd)) {
-        run_external_cmd(cmd, arg);
+        run_external_cmd(cmd, NULL);
     }
     else {
         wrong_cmd_error(cmd);
