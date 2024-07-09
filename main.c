@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/wait.h>
 #include "cmds/built-in/ls.h"
 #include "cmds/built-in/cd.h"
 #include "cmds/built-in/touch.h"
@@ -24,11 +25,20 @@ void run_external_cmd(const char *cmd, const char *arg1) {
     char whole_path_to_run[50] = {0};
     get_cmd_path(cmd, whole_path_to_run);
 
-    printf("%s\n", whole_path_to_run);
+    pid_t pid;
+    pid = fork();
 
-    //ret = execl(whole_path_to_run, cmd, arg1);
-    if(ret == -1)
-        perror("execl");
+    if(pid == 0) {
+        int ret;
+        ret = execl(whole_path_to_run, cmd, arg1);
+
+        if(ret == -1) {
+            perror("execv");
+        }
+        exit(0);
+    }
+    else
+        wait(NULL);
 }
 
 int search_external_cmd(const char *arg) {
@@ -110,6 +120,7 @@ void run_cmd(const char *cmd, char *arg)  {
     }
     else if(search_external_cmd(cmd)) {
         run_external_cmd(cmd, arg);
+        print_cr0();
     }
     else {
         wrong_cmd_error(cmd);
